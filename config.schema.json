@@ -1,0 +1,52 @@
+{
+  "pluginAlias": "DummyRadioSwitchPlatform",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Homebridge plugin that exposes a radio button selection with dummy switches.",
+  "footerDisplay": "Each radio group can have several switches, only one switch can be enabled at a time. If a switched is turned ON, all other switches are turned OFF.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "platform": {
+        "title": "Testing",
+        "type": "string"
+      },
+      "groups": {
+        "title": "Groups",
+        "type": "array",
+        "additionalItems": true,
+        "items": {
+          "title": "Items",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "name": {
+              "title": "Name",
+              "type": "string"
+            },
+            "switches": {
+              "title": "Switch",
+              "type": "array",
+              "additionalItems": true,
+              "items": {
+                "Title": "Testing",
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "name": {
+                    "title": "Name",
+                    "type": "string"
+                  },
+                  "isDefaultOn": {
+                    "title": "Is Default On?",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

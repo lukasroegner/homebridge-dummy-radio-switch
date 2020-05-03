@@ -1,0 +1,39 @@
+{
+  "name": "homebridge-dummy-radio-switch",
+  "version": "0.1.0",
+  "description": "Plugin for dummy radio selection in homebridge.",
+  "license": "MIT",
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "homebridge-dummy-radio-switch",
+    "dummy-switch",
+    "radio-switch"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lukasroegner/homebridge-dummy-radio-switch.git"
+  },
+  "devDependencies": {
+    "@types/node": "^10",
+    "typescript": "^3.7.5",
+    "rimraf": "^3.0.0",
+    "hap-nodejs": "^0.5.0"
+  },
+  "dependencies": {
+    "homebridge-framework": "1.0.5"
+  },
+  "bugs": {
+    "url": "http://github.com/lukasroegner/homebridge-dummy-radio-switch/issues"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "debug": "rimraf dist/ && tsc && homebridge -D -U . -P .",
+    "build": "rimraf dist/ && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=10",
+    "homebridge": ">=0.2"
+  }
+}

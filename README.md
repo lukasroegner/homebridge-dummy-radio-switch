@@ -8,7 +8,7 @@ Each "radio group" can have several switches, only one switch can be enabled at 
 Please install the plugin with the following command:
 
 ```
-npm install -g https://github.com/lukasroegner/homebridge-dummy-radio-switch.git
+npm install -g homebridge-dummy-radio-switch
 ```
 
 ## Configuration

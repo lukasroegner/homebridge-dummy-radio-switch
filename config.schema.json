@@ -1,52 +1,49 @@
 {
-  "pluginAlias": "DummyRadioSwitchPlatform",
-  "pluginType": "platform",
-  "singular": true,
-  "headerDisplay": "Homebridge plugin that exposes a radio button selection with dummy switches.",
-  "footerDisplay": "Each radio group can have several switches, only one switch can be enabled at a time. If a switched is turned ON, all other switches are turned OFF.",
-  "schema": {
-    "type": "object",
-    "properties": {
-      "platform": {
-        "title": "Testing",
-        "type": "string"
-      },
-      "groups": {
-        "title": "Groups",
-        "type": "array",
-        "additionalItems": true,
-        "items": {
-          "title": "Items",
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "name": {
-              "title": "Name",
-              "type": "string"
-            },
-            "switches": {
-              "title": "Switch",
-              "type": "array",
-              "additionalItems": true,
-              "items": {
-                "Title": "Testing",
-                "type": "object",
-                "additionalProperties": true,
-                "properties": {
-                  "name": {
-                    "title": "Name",
-                    "type": "string"
-                  },
-                  "isDefaultOn": {
-                    "title": "Is Default On?",
-                    "type": "boolean"
-                  }
+    "pluginAlias": "DummyRadioSwitchPlatform",
+    "pluginType": "platform",
+    "singular": true,
+    "headerDisplay": "Homebridge plugin that exposes a radio button selection with dummy switches.",
+    "footerDisplay": "Each radio group can have several switches, only one switch can be enabled at a time. If a switched is turned ON, all other switches are turned OFF.",
+    "schema": {
+        "type": "object",
+        "properties": {
+            "groups": {
+                "type": "array",
+                "items": {
+                    "title": "Group",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "title": "Name",
+                            "type": "string",
+                            "required": true,
+                            "placeholder": "unique group name",
+                            "description": "The name of the group, that is initially used as the display name."
+                        },
+                        "switches": {
+                            "type": "array",
+                            "items": {
+                                "title": "Switch",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "title": "Name",
+                                        "type": "string",
+                                        "required": true,
+                                        "placeholder": "switch name",
+                                        "description": "The name of the switch. Should be unique within the group."
+                                    },
+                                    "isDefaultOn": {
+                                        "title": "Is Default On",
+                                        "type": "boolean",
+                                        "description": "A single switch in a group can be defined as the 'default on'. If a switch in a group has this property enabled, the group acts as a radio button group that always has one option 'selected'. This means if all switches are set to OFF, the switch that is marked as 'default on' is set to ON."
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
     }
-  }
 }

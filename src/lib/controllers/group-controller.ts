@@ -43,15 +43,25 @@ export class GroupController {
             onCharacteristic.valueChanged = newValue => {
                 if (onCharacteristic.value !== newValue) {
                     platform.logger.info(`[${groupConfiguration.name}] switch ${switchConfiguration.name} changed to ${newValue}`);
-                   
-        for (let x of this.onCharacteristics) {
-            console.log(x.configuration.name + " " + x.characteristic.value);
-        }
 
                     // Checks if there are already switches which are on
                     const otherOnCharacteristics = this.onCharacteristics.filter(c => c.configuration.name !== switchConfiguration.name && c.characteristic.value);
                     for (let otherOnCharacteristic of otherOnCharacteristics) {
                         otherOnCharacteristic.characteristic.value = false;
+                    }
+
+                    // Starts the timeout if the switch is on
+                    if (newValue && groupConfiguration.timeout) {
+                        if (this.timeoutHandle) {
+                            clearTimeout(this.timeoutHandle);
+                            this.timeoutHandle = null;
+                        }
+                        this.timeoutHandle = setTimeout(() => {
+                            for (let onCharacteristic of this.onCharacteristics) {
+                                onCharacteristic.characteristic.value = false;
+                            }
+                            this.ensureDefaultOn();
+                        }, groupConfiguration.timeout * 1000);
                     }
 
                     // Ensures the default on switch
@@ -64,6 +74,11 @@ export class GroupController {
         // Initially checks for the default on
         this.ensureDefaultOn();
     }
+
+    /**
+     * Contains the handle for group timeout.
+     */
+    private timeoutHandle: any = null;
 
     /**
      * Contains the characteristics of all switches and their configurations.
@@ -79,10 +94,6 @@ export class GroupController {
         const defaultOnCharacteristic = this.onCharacteristics.find(c => c.configuration.isDefaultOn);
         if (!defaultOnCharacteristic) {
             return;
-        }
-
-        for (let x of this.onCharacteristics) {
-            console.log(x.configuration.name + " " + x.characteristic.value);
         }
 
         // Checks if currently all switches are off

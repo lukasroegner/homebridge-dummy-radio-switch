@@ -40,6 +40,11 @@
                                     }
                                 }
                             }
+                        },
+                        "timeout": {
+                            "title": "Timeout",
+                            "type": "integer",
+                            "description": "If a value is set (in seconds), a timer is started when the 'selection' changes. When the timer elapses, the 'selection' is reset to the button that is marked as default on. If no default on button is provided, all are switched off."
                         }
                     }
                 }

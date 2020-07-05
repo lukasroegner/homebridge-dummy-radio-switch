@@ -15,4 +15,9 @@ export interface GroupConfiguration {
      * Gets or sets the switches of the group.
      */
     switches: Array<SwitchConfiguration>;
+
+    /**
+     * Gets or sets the timeout for the timer.
+     */
+    timeout: number;
 }

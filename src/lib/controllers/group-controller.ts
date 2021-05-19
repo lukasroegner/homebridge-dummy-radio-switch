@@ -60,13 +60,42 @@ export class GroupController {
                             for (let onCharacteristic of this.onCharacteristics) {
                                 onCharacteristic.characteristic.value = false;
                             }
-                            this.ensureDefaultOn();
+
+                            // If the switch is turned off and a next on switch is defined, it is switched on
+                            if (switchConfiguration.nextOnSwitchName) {
+
+                                const nextOnCharacteristic = this.onCharacteristics.find(c => c.configuration.name === switchConfiguration.nextOnSwitchName);
+                                if (nextOnCharacteristic) {
+
+                                    // Turns on the default characteristic
+                                    this.platform.logger.info(`[${this.groupConfiguration.name}] next on activated`);
+                                    setTimeout(() => nextOnCharacteristic.characteristic.value = true, 50);
+                                }
+                            } else {
+
+                                // Ensures the default on switch
+                                this.ensureDefaultOn();
+                            }
                         }, groupConfiguration.timeout * 1000);
                     }
 
-                    // Ensures the default on switch
                     onCharacteristic.value = newValue;
-                    this.ensureDefaultOn();
+
+                    // If the switch is turned off and a next on switch is defined, it is switched on
+                    if (!newValue && switchConfiguration.nextOnSwitchName) {
+
+                        const nextOnCharacteristic = this.onCharacteristics.find(c => c.configuration.name === switchConfiguration.nextOnSwitchName);
+                        if (nextOnCharacteristic) {
+
+                            // Turns on the default characteristic
+                            this.platform.logger.info(`[${this.groupConfiguration.name}] next on activated`);
+                            setTimeout(() => nextOnCharacteristic.characteristic.value = true, 50);
+                        }
+                    } else {
+                        
+                        // Ensures the default on switch
+                        this.ensureDefaultOn();
+                    }
                 }
             };
         }

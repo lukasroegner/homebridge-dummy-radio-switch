@@ -24,11 +24,13 @@ npm install -g homebridge-dummy-radio-switch
                     "switches": [
                         {
                             "name": "<SWITCH-NAME-1>",
-                            "isDefaultOn": false
+                            "isDefaultOn": false,
+                            "nextOnSwitchName": null
                         },
                         {
                             "name": "<SWITCH-NAME-2>",
-                            "isDefaultOn": false
+                            "isDefaultOn": false,
+                            "nextOnSwitchName": null
                         },
                         ...
                     ],
@@ -49,5 +51,7 @@ npm install -g homebridge-dummy-radio-switch
 **name**: The name of the switch.
 
 **isDefaultOn** (optional): A single switch in a group can be defined as the "default on". If a switch in a group has this property set to `true`, the group acts as a radio button group that **always** has one option "selected". This means if all switches are set to OFF, the switch that is marked as "default on" is set to ON.
+
+**nextOnSwitchName** (optional): The name of the switch (in the same group) that should be switched to ON if the current switch is switched OFF. This overwrites the "default on" behavior.
 
 **timeout** (optional): If a value is set (in seconds), a timer is started when the "selection" changes. When the timer elapses, the "selection" is reset to the button that is marked as `isDefaultOn`. If no `isDefaultOn` button is provided, all are switched off.

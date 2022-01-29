@@ -18,4 +18,9 @@ export interface SwitchConfiguration {
      * Gets or sets the name of the switch (in the same group) that should be switched to ON if the current switch is switched OFF. This overwrites the "default on" behavior.
      */
     nextOnSwitchName: string;
+
+    /**
+     * Gets or sets the timeout for the timer.
+     */
+    timeout: number;
 }

@@ -25,11 +25,13 @@ npm install -g homebridge-dummy-radio-switch
                         {
                             "name": "<SWITCH-NAME-1>",
                             "isDefaultOn": false,
+                            "timeout": 0,
                             "nextOnSwitchName": null
                         },
                         {
                             "name": "<SWITCH-NAME-2>",
                             "isDefaultOn": false,
+                            "timeout": 0,
                             "nextOnSwitchName": null
                         },
                         ...
@@ -54,4 +56,4 @@ npm install -g homebridge-dummy-radio-switch
 
 **nextOnSwitchName** (optional): The name of the switch (in the same group) that should be switched to ON if the current switch is switched OFF. This overwrites the "default on" behavior.
 
-**timeout** (optional): If a value is set (in seconds), a timer is started when the "selection" changes. When the timer elapses, the "selection" is reset to the button that is marked as `isDefaultOn`. If no `isDefaultOn` button is provided, all are switched off.
+**timeout** (optional): If a value is set (in seconds), a timer is started when the "selection" changes. When the timer elapses, the "selection" is reset to the button that is marked as `isDefaultOn`. If no `isDefaultOn` button is provided, all are switched off. You can set a per-group timeout or multiple per-switch timeout values.

@@ -51,7 +51,7 @@ export class GroupController {
                     }
 
                     // Starts the timeout if the switch is on
-                    if (newValue && groupConfiguration.timeout) {
+                    if (newValue && (groupConfiguration.timeout || switchConfiguration.timeout)) {
                         if (this.timeoutHandle) {
                             clearTimeout(this.timeoutHandle);
                             this.timeoutHandle = null;
@@ -76,7 +76,7 @@ export class GroupController {
                                 // Ensures the default on switch
                                 this.ensureDefaultOn();
                             }
-                        }, groupConfiguration.timeout * 1000);
+                        }, (groupConfiguration.timeout || switchConfiguration.timeout) * 1000);
                     }
 
                     onCharacteristic.value = newValue;

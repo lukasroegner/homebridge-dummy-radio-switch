@@ -52,31 +52,7 @@ export class GroupController {
 
                     // Starts the timeout if the switch is on
                     if (newValue && (groupConfiguration.timeout || switchConfiguration.timeout)) {
-                        if (this.timeoutHandle) {
-                            clearTimeout(this.timeoutHandle);
-                            this.timeoutHandle = null;
-                        }
-                        this.timeoutHandle = setTimeout(() => {
-                            for (let onCharacteristic of this.onCharacteristics) {
-                                onCharacteristic.characteristic.value = false;
-                            }
-
-                            // If the switch is turned off and a next on switch is defined, it is switched on
-                            if (switchConfiguration.nextOnSwitchName) {
-
-                                const nextOnCharacteristic = this.onCharacteristics.find(c => c.configuration.name === switchConfiguration.nextOnSwitchName);
-                                if (nextOnCharacteristic) {
-
-                                    // Turns on the default characteristic
-                                    this.platform.logger.info(`[${this.groupConfiguration.name}] next on activated`);
-                                    setTimeout(() => nextOnCharacteristic.characteristic.value = true, 50);
-                                }
-                            } else {
-
-                                // Ensures the default on switch
-                                this.ensureDefaultOn();
-                            }
-                        }, (groupConfiguration.timeout || switchConfiguration.timeout) * 1000);
+                        this.updateTimeout(switchConfiguration);
                     }
 
                     onCharacteristic.value = newValue;
@@ -88,7 +64,7 @@ export class GroupController {
                         if (nextOnCharacteristic) {
 
                             // Turns on the default characteristic
-                            this.platform.logger.info(`[${this.groupConfiguration.name}] next on activated`);
+                            this.platform.logger.info(`[${this.groupConfiguration.name}] next on activated: ${nextOnCharacteristic.configuration.name}`);
                             setTimeout(() => nextOnCharacteristic.characteristic.value = true, 50);
                         }
                     } else {
@@ -133,5 +109,42 @@ export class GroupController {
         // Turns on the default characteristic
         this.platform.logger.info(`[${this.groupConfiguration.name}] default on activated`);
         setTimeout(() => defaultOnCharacteristic.characteristic.value = true, 50);
+    }
+
+    /**
+     * Clears the existing timeout and sets a new timeout for the specified switch.
+     * @param switchConfiguration The configuration of the switch for which the new timeout is set (if configured).
+     */
+    private updateTimeout(switchConfiguration: SwitchConfiguration) {
+        if (this.timeoutHandle) {
+            clearTimeout(this.timeoutHandle);
+            this.timeoutHandle = null;
+        }
+        this.timeoutHandle = setTimeout(() => {
+            for (let onCharacteristic of this.onCharacteristics) {
+                onCharacteristic.characteristic.value = false;
+            }
+
+            // If the switch is turned off and a next on switch is defined, it is switched on
+            if (switchConfiguration.nextOnSwitchName) {
+
+                const nextOnCharacteristic = this.onCharacteristics.find(c => c.configuration.name === switchConfiguration.nextOnSwitchName);
+                if (nextOnCharacteristic) {
+
+                    // Turns on the default characteristic
+                    this.platform.logger.info(`[${this.groupConfiguration.name}] next on activated: ${nextOnCharacteristic.configuration.name}`);
+                    setTimeout(() => {
+                        if (this.groupConfiguration.timeout || nextOnCharacteristic.configuration.timeout) {
+                            this.updateTimeout(nextOnCharacteristic.configuration);
+                        }
+                        nextOnCharacteristic.characteristic.value = true;
+                    }, 50);
+                }
+            } else {
+
+                // Ensures the default on switch
+                this.ensureDefaultOn();
+            }
+        }, (this.groupConfiguration.timeout || switchConfiguration.timeout) * 1000);
     }
 }

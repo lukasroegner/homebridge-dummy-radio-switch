@@ -28,7 +28,7 @@ export class GroupController {
         });
 
         // Creates all switches of the controller
-        const accessoryType = (groupConfiguration.displayAs == "Outlet") ? "Outlet" : "Switch"
+        const accessoryType = (groupConfiguration.displayAsPowerStrip) ? "Outlet" : "Switch"
         for (let switchConfiguration of groupConfiguration.switches) {
             platform.logger.info(`[${groupConfiguration.name}] Adding ${accessoryType.toLowerCase()} ${switchConfiguration.name}`);
 

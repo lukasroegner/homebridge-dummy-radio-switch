@@ -28,11 +28,12 @@ export class GroupController {
         });
 
         // Creates all switches of the controller
+        const accessoryType = (groupConfiguration.displayAs == "Outlet") ? "Outlet" : "Switch"
         for (let switchConfiguration of groupConfiguration.switches) {
-            platform.logger.info(`[${groupConfiguration.name}] Adding switch ${switchConfiguration.name}`);
+            platform.logger.info(`[${groupConfiguration.name}] Adding ${accessoryType.toLowerCase()} ${switchConfiguration.name}`);
 
             // Creates the service and characteristic
-            const switchService = accessory.useService(Homebridge.Services.Switch, switchConfiguration.name, `${switchConfiguration.name}-switch`);
+            const switchService = accessory.useService(Homebridge.Services[accessoryType], switchConfiguration.name, `${switchConfiguration.name}-switch`);
             const onCharacteristic = switchService.useCharacteristic<boolean>(Homebridge.Characteristics.On);
             this.onCharacteristics.push({
                 configuration: switchConfiguration,

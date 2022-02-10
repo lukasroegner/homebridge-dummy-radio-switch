@@ -12,6 +12,11 @@ export interface GroupConfiguration {
     name: string;
 
     /**
+     * Gets or sets a value that determines whether outlets should be exposed instead of switches.
+     */
+    displayAsPowerStrip: boolean;
+
+    /**
      * Gets or sets the switches of the group.
      */
     switches: Array<SwitchConfiguration>;

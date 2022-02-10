@@ -1,6 +1,6 @@
 
 import { Platform } from '../platform';
-import { Homebridge, Characteristic } from 'homebridge-framework';
+import { Homebridge, Characteristic, Service } from 'homebridge-framework';
 import { GroupConfiguration } from '../configuration/group-configuration';
 import { SwitchConfiguration } from '../configuration/switch-configuration';
 
@@ -32,7 +32,12 @@ export class GroupController {
             platform.logger.info(`[${groupConfiguration.name}] Adding switch ${switchConfiguration.name}`);
 
             // Creates the service and characteristic
-            const switchService = accessory.useService(Homebridge.Services.Switch, switchConfiguration.name, `${switchConfiguration.name}-switch`);
+            let switchService: Service;
+            if (groupConfiguration.displayAsPowerStrip) {
+                switchService = accessory.useService(Homebridge.Services.Outlet, switchConfiguration.name, `${switchConfiguration.name}-outlet`);
+            } else {
+                switchService = accessory.useService(Homebridge.Services.Switch, switchConfiguration.name, `${switchConfiguration.name}-switch`);
+            }
             const onCharacteristic = switchService.useCharacteristic<boolean>(Homebridge.Characteristics.On);
             this.onCharacteristics.push({
                 configuration: switchConfiguration,
@@ -75,6 +80,8 @@ export class GroupController {
                 }
             };
         }
+
+        accessory.removeUnusedServices();
 
         // Initially checks for the default on
         this.ensureDefaultOn();

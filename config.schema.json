@@ -20,6 +20,11 @@
                             "placeholder": "unique group name",
                             "description": "The name of the group, that is initially used as the display name."
                         },
+                        "displayAsPowerStrip": {
+                            "title": "Display As Power Strip",
+                            "type": "boolean",
+                            "description": "If enabled, outlets instead of switches are exposed to HomeKit. This provides a more compact UI in the Apple Home app."
+                        },
                         "switches": {
                             "type": "array",
                             "items": {

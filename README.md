@@ -21,6 +21,7 @@ npm install -g homebridge-dummy-radio-switch
             "groups": [
                 {
                     "name": "<GROUP-NAME>",
+                    "displayAsPowerStrip": false,
                     "switches": [
                         {
                             "name": "<SWITCH-NAME-1>",
@@ -47,6 +48,8 @@ npm install -g homebridge-dummy-radio-switch
 **groups**: Array of all groups of switches that should be exposed to HomeKit. Each group is a separate accessory.
 
 **name**: The name of the group, that is initially used as the display name.
+
+**displayAsPowerStrip**: If set to `true`, outlets instead of switches are exposed to HomeKit. This provides a more compact UI in the Apple Home app. Defaults to `false`.
 
 **switches**: Array of all switches of the group.
 

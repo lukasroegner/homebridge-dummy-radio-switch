@@ -38,6 +38,9 @@ export class GroupController {
             } else {
                 switchService = accessory.useService(Homebridge.Services.Switch, switchConfiguration.name, `${switchConfiguration.name}-switch`);
             }
+
+            switchService.useCharacteristic(Homebridge.Characteristics.Name, switchConfiguration.name);
+
             const onCharacteristic = switchService.useCharacteristic<boolean>(Homebridge.Characteristics.On);
             this.onCharacteristics.push({
                 configuration: switchConfiguration,

@@ -1,6 +1,6 @@
 {
   "name": "homebridge-dummy-radio-switch",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Plugin for dummy radio selection in homebridge.",
   "license": "MIT",
   "keywords": [

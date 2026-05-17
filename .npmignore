@@ -1,12 +1,17 @@
 
+# Source code
+.github
+.vscode
+src
+eslint.config.js
+nodemon.json
+tsconfig.json
+
 # Dependency directories
 node_modules
 
 # Optional npm cache directory
 .npm
-
-# Build output
-dist
 
 # Local testing
 test

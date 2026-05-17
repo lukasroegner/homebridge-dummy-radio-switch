@@ -4,11 +4,13 @@
     "singular": true,
     "headerDisplay": "Homebridge plugin that exposes a radio button selection with dummy switches.",
     "footerDisplay": "Each radio group can have several switches, only one switch can be enabled at a time. If a switched is turned ON, all other switches are turned OFF.",
+    "strictValidation": false,
     "schema": {
         "type": "object",
         "properties": {
             "groups": {
                 "type": "array",
+                "title": "Groups",
                 "items": {
                     "title": "Group",
                     "type": "object",
@@ -25,8 +27,15 @@
                             "type": "boolean",
                             "description": "If enabled, outlets instead of switches are exposed to HomeKit. This provides a more compact UI in the Apple Home app."
                         },
+                        "timeout": {
+                            "title": "Timeout",
+                            "type": "integer",
+                            "description": "If a value is set (in seconds), a timer is started when the 'selection' changes. When the timer elapses, the 'selection' is reset to the button that is marked as default on. If no default on button is provided, all are switched off."
+                        },
                         "switches": {
                             "type": "array",
+                            "title": "Switches",
+                            "expandable": true,
                             "items": {
                                 "title": "Switch",
                                 "type": "object",
@@ -56,11 +65,6 @@
                                     }
                                 }
                             }
-                        },
-                        "timeout": {
-                            "title": "Timeout",
-                            "type": "integer",
-                            "description": "If a value is set (in seconds), a timer is started when the 'selection' changes. When the timer elapses, the 'selection' is reset to the button that is marked as default on. If no default on button is provided, all are switched off."
                         }
                     }
                 }

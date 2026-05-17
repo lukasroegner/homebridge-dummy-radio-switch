@@ -1,6 +1,9 @@
+import type { API } from 'homebridge';
 
-import { Homebridge } from 'homebridge-framework';
-import { Platform } from './lib/platform';
+import { DummyRadioSwitchPlatform } from './platform.js';
+import { PLATFORM_NAME } from './settings.js';
 
-// Registers the platform at homebridge
-module.exports = Homebridge.register(new Platform());
+/**
+ * Registers the platform with Homebridge.
+ */
+export default (api: API) => api.registerPlatform(PLATFORM_NAME, DummyRadioSwitchPlatform);
